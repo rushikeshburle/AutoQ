@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoQ - AI Question Paper Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🎓 AutoQ</h1>
+                <p>AI-Powered Question Generator</p>
+            </div>
+            <nav class="nav">
+                <a href="#upload" class="nav-link active">Upload</a>
+                <a href="#questions" class="nav-link">Questions</a>
+                <a href="#papers" class="nav-link">Papers</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h2 class="hero-title">Transform Your PDFs into Question Papers</h2>
+                <p class="hero-subtitle">Upload educational content and let AI generate questions automatically using advanced machine learning</p>
+            </section>
+
+            <!-- Upload Section -->
+            <section id="upload" class="section">
+                <div class="card">
+                    <h3 class="card-title">📄 Upload Document</h3>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📁</div>
+                        <p class="upload-text">Drag & drop your PDF here or click to browse</p>
+                        <input type="file" id="fileInput" accept=".pdf" hidden>
+                        <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                            Choose File
+                        </button>
+                    </div>
+                    <div id="fileInfo" class="file-info hidden"></div>
+                    <button id="uploadBtn" class="btn btn-success hidden">Upload & Process</button>
+                </div>
+
+                <!-- Documents List -->
+                <div class="card">
+                    <h3 class="card-title">📚 Your Documents</h3>
+                    <div id="documentsList" class="documents-list">
+                        <p class="empty-state">No documents uploaded yet. Upload your first PDF to get started!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Questions Section -->
+            <section id="questions" class="section hidden">
+                <div class="card">
+                    <h3 class="card-title">🤖 Generate Questions</h3>
+                    <div class="form-group">
+                        <label for="documentSelect">Select Document:</label>
+                        <select id="documentSelect" class="form-control">
+                            <option value="">Choose a document...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="numQuestions">Number of Questions:</label>
+                        <input type="number" id="numQuestions" class="form-control" value="10" min="1" max="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Question Types:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" value="mcq" checked> Multiple Choice</label>
+                            <label><input type="checkbox" value="true_false"> True/False</label>
+                            <label><input type="checkbox" value="short_answer" checked> Short Answer</label>
+                            <label><input type="checkbox" value="long_answer"> Long Answer</label>
+                        </div>
+                    <button id="generateBtn" class="btn btn-primary">✨ Generate Questions</button>
+                </div>
+
+                <!-- Generated Questions -->
+                <div class="card">
+                    <button id="generateBtn" class="btn btn-success">🤖 Generate Questions</button>
+                    <button id="downloadQuestionsBtn" class="btn btn-primary hidden" style="margin-left: 1rem;">📥 Download Questions as PDF</button>
+                </div>
+                
+                <div id="questionsList" class="questions-list">
+                    <p class="empty-state">No questions generated yet. Select a document and generate questions!</p>
+                    <div class="form-group">
+                        <label for="paperTitle">Paper Title:</label>
+                        <input type="text" id="paperTitle" class="form-control" placeholder="e.g., Final Exam 2024">
+                    </div>
+                    <div class="form-group">
+                        <label for="totalMarks">Total Marks:</label>
+                        <input type="number" id="totalMarks" class="form-control" value="100" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Duration (minutes):</label>
+                        <input type="number" id="duration" class="form-control" value="60" min="1">
+                    </div>
+                    <button id="createPaperBtn" class="btn btn-primary">📄 Create Paper</button>
+                </div>
+
+                <!-- Papers List -->
+                <div class="card">
+                    <h3 class="card-title">📑 Your Question Papers</h3>
+                    <div id="papersList" class="papers-list">
+                        <p class="empty-state">No papers created yet. Create your first question paper!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 AutoQ - AI-Powered Question Generator | Using Machine Learning & NLP</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Processing with AI...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Cache & Reload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { margin: 0 0 20px 0; font-size: 2.5em; }
+        p { font-size: 1.2em; margin: 10px 0; }
+        .btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: none;
+        }
+        .success { background: rgba(76, 175, 80, 0.3); }
+        .info { background: rgba(33, 150, 243, 0.3); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Cache Clear Tool</h1>
+        <p>This will clear your browser cache and reload AutoQ with the fixed code.</p>
+        
+        <button class="btn" onclick="clearAndReload()">🚀 Clear Cache & Open AutoQ</button>
+        <button class="btn" onclick="manualSteps()">📋 Show Manual Steps</button>
+        
+        <div id="status" class="status"></div>
+    </div>
+    
+    <script>
+        function clearAndReload() {
+            const status = document.getElementById('status');
+            status.style.display = 'block';
+            status.className = 'status info';
+            status.innerHTML = '⏳ Clearing cache...';
+            
+            // Clear service workers
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    for(let registration of registrations) {
+                        registration.unregister();
+                    }
+                });
+            }
+            
+            // Clear cache storage
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                });
+            }
+            
+            setTimeout(() => {
+                status.className = 'status success';
+                status.innerHTML = '✅ Cache cleared! Redirecting to AutoQ...';
+                
+                setTimeout(() => {
+                    // Redirect with cache busting
+                    window.location.href = '/index.html?v=' + Date.now();
+                }, 1000);
+            }, 1000);
+        }
+        
+        function manualSteps() {
+            const status = document.getElementById('status');
+            status.style.display = 'block';
+            status.className = 'status info';
+            status.innerHTML = `
+                <h3>Manual Cache Clear Steps:</h3>
+                <ol style="text-align: left; margin: 10px 20px;">
+                    <li>Press <strong>Ctrl+Shift+Delete</strong></li>
+                    <li>Select "Cached images and files"</li>
+                    <li>Click "Clear data"</li>
+                    <li>Close this tab</li>
+                    <li>Go to: <strong>http://localhost:3001</strong></li>
+                    <li>Press <strong>Ctrl+Shift+R</strong> (hard refresh)</li>
+                    <li>Press <strong>F12</strong> → Console tab</li>
+                    <li>Look for: <strong>"🔧 AutoQ v2.0 - Question Type Bug Fixed!"</strong></li>
+                </ol>
+                <p>If you see that message, the fix is loaded! ✅</p>
+            `;
+        }
+        
+        // Auto-show manual steps after 2 seconds
+        setTimeout(() => {
+            const status = document.getElementById('status');
+            status.style.display = 'block';
+            status.className = 'status info';
+            status.innerHTML = `
+                <p><strong>💡 Quick Tip:</strong></p>
+                <p>Press <strong>Ctrl+Shift+R</strong> on the AutoQ page to force reload!</p>
+                <p>Or click "Show Manual Steps" above for detailed instructions.</p>
+            `;
+        }, 2000);
+    </script>
+</body>
+</html>
