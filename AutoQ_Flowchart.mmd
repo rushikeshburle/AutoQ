@@ -1,0 +1,20 @@
+graph TD
+    A[Start] --> B[User Login/Register]
+    B --> C[Upload PDF]
+    C --> D[Process Document]
+    D --> E{Document Processed?}
+    E -->|Yes| F[Generate Questions]
+    E -->|No| C
+    F --> G[Select Questions]
+    G --> H[Create Paper]
+    H --> I[Configure Paper]
+    I --> J[Generate PDF]
+    J --> K[Download/Share]
+    K --> L[End]
+    
+    style A fill:#4CAF50,stroke:#388E3C
+    style L fill:#F44336,stroke:#D32F2F
+    style C fill:#2196F3,stroke:#1976D2
+    style F fill:#FFC107,stroke:#FFA000
+    style H fill:#9C27B0,stroke:#7B1FA2
+    style J fill:#009688,stroke:#00796B
